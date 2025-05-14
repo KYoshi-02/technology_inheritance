@@ -19,6 +19,11 @@
   </div>
 
   <div class="field">
+    <%= f.label :company_name, "会社名" %><br />
+    <%= f.text_field :company_name, autocomplete: "organization" %>
+  </div>
+
+  <div class="field">
     <%= f.label :password %>
     <% if @minimum_password_length %>
     <em>(<%= @minimum_password_length %> characters minimum)</em>
