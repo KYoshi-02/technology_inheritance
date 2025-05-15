@@ -1,6 +1,9 @@
 class User < ApplicationRecord
   belongs_to :company
   attr_accessor :company_name
+
+  enum role: { general: 0, admin: 1 }
+
   
   before_validation :assign_company
 
@@ -15,4 +18,5 @@ class User < ApplicationRecord
       self.company = Company.find_or_create_by(name: company_name)
     end
   end
+
 end
