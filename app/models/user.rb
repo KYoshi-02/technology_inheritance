@@ -4,7 +4,8 @@ class User < ApplicationRecord
 
   enum role: { general: 0, admin: 1 }
 
-  
+  has_many :knowhows, dependent: :destroy
+
   before_validation :assign_company
 
 
