@@ -6,6 +6,8 @@ class User < ApplicationRecord
 
   has_many :knowhows, dependent: :destroy
 
+  has_many :knowhow_posts, dependent: :destroy
+
   before_validation :assign_company
 
 

@@ -21,16 +21,11 @@ class KnowhowPostsController < ApplicationController
 
   # POST /knowhow_posts or /knowhow_posts.json
   def create
-    @knowhow_post = KnowhowPost.new(knowhow_post_params)
-
-    respond_to do |format|
-      if @knowhow_post.save
-        format.html { redirect_to @knowhow_post, notice: "Knowhow post was successfully created." }
-        format.json { render :show, status: :created, location: @knowhow_post }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @knowhow_post.errors, status: :unprocessable_entity }
-      end
+    @knowhow_post = current_user.knowhow_posts.build(knowhow_post_params)
+    if @knowhow_post.save
+      redirect_to @knowhow_post, notice: "ノウハウを投稿しました。"
+    else
+      render :new, status: :unprocessable_entity
     end
   end
 
