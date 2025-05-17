@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @knowhow_post %>
+
+<div>
+  <%= link_to "Edit this knowhow post", edit_knowhow_post_path(@knowhow_post) %> |
+  <%= link_to "Back to knowhow posts", knowhow_posts_path %>
+
+  <%= button_to "Destroy this knowhow post", @knowhow_post, method: :delete %>
+</div>

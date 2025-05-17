@@ -1,0 +1,14 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Knowhow posts</h1>
+
+<div id="knowhow_posts">
+  <% @knowhow_posts.each do |knowhow_post| %>
+    <%= render knowhow_post %>
+    <p>
+      <%= link_to "Show this knowhow post", knowhow_post %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New knowhow post", new_knowhow_post_path %>
