@@ -60,6 +60,6 @@ class KnowhowPostsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def knowhow_post_params
-      params.require(:knowhow_post).permit(:title, :content, :user_id)
+      params.require(:knowhow_post).permit(:title, :content, :image, :video)
     end
 end

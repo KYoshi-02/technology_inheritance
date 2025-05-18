@@ -1,9 +1,38 @@
-<h1>New knowhow post</h1>
+<h1>ノウハウ投稿</h1>
 
-<%= render "form", knowhow_post: @knowhow_post %>
+<%= form_with(model: @knowhow_post, local: true) do |form| %>
+  <% if @knowhow_post.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@knowhow_post.errors.count, "エラー") %>があります</h2>
+      <ul>
+        <% @knowhow_post.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
 
-<br>
+  <div>
+    <%= form.label :title, "タイトル" %><br>
+    <%= form.text_field :title %>
+  </div>
 
-<div>
-  <%= link_to "Back to knowhow posts", knowhow_posts_path %>
-</div>
+  <div>
+    <%= form.label :content, "本文" %><br>
+    <%= form.text_area :content %>
+  </div>
+
+  <div>
+    <%= form.label :image, "画像（任意）" %><br>
+    <%= form.file_field :image %>
+  </div>
+
+  <div>
+    <%= form.label :video, "動画（任意）" %><br>
+    <%= form.file_field :video %>
+  </div>
+
+  <div>
+    <%= form.submit "投稿する" %>
+  </div>
+<% end %>
