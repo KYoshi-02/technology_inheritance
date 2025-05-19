@@ -1,32 +1,36 @@
-<%= form_with(model: knowhow_post) do |form| %>
+<%= form_with(model: knowhow_post, local: true) do |form| %>
   <% if knowhow_post.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(knowhow_post.errors.count, "error") %> prohibited this knowhow_post from being saved:</h2>
-
+    <div id="error_explanation">
+      <h2><%= pluralize(knowhow_post.errors.count, "エラー") %>があります</h2>
       <ul>
-        <% knowhow_post.errors.each do |error| %>
-          <li><%= error.full_message %></li>
+        <% knowhow_post.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
         <% end %>
       </ul>
     </div>
   <% end %>
 
   <div>
-    <%= form.label :title, style: "display: block" %>
+    <%= form.label :title, "タイトル" %><br>
     <%= form.text_field :title %>
   </div>
 
   <div>
-    <%= form.label :content, style: "display: block" %>
+    <%= form.label :content, "本文" %><br>
     <%= form.text_area :content %>
   </div>
 
   <div>
-    <%= form.label :user_id, style: "display: block" %>
-    <%= form.text_field :user_id %>
+    <%= form.label :image, "画像（任意）" %><br>
+    <%= form.file_field :image %>
   </div>
 
   <div>
-    <%= form.submit %>
+    <%= form.label :video, "動画（任意）" %><br>
+    <%= form.file_field :video %>
+  </div>
+
+  <div>
+    <%= form.submit action_name == "new" ? "投稿する" : "更新する" %>
   </div>
 <% end %>

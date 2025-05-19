@@ -1,10 +1,19 @@
-<p style="color: green"><%= notice %></p>
+<h1><%= @knowhow_post.title %></h1>
 
-<%= render @knowhow_post %>
+<p>
+  <strong>投稿者：</strong>
+  <%= @knowhow_post.user.nick_name %>
+</p>
 
-<div>
-  <%= link_to "Edit this knowhow post", edit_knowhow_post_path(@knowhow_post) %> |
-  <%= link_to "Back to knowhow posts", knowhow_posts_path %>
+<p>
+  <strong>内容：</strong><br>
+  <%= simple_format(@knowhow_post.body) %>
+</p>
 
-  <%= button_to "Destroy this knowhow post", @knowhow_post, method: :delete %>
-</div>
+<p>
+  <%= link_to "一覧に戻る", knowhow_posts_path %>
+  <% if @knowhow_post.user == current_user || current_user.admin? %>
+    | <%= link_to "編集", edit_knowhow_post_path(@knowhow_post) %>
+    | <%= link_to "削除", knowhow_post_path(@knowhow_post), method: :delete, data: { confirm: "本当に削除しますか？" } %>
+  <% end %>
+</p>

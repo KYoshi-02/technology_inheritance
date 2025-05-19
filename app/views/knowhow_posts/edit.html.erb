@@ -1,10 +1,5 @@
-<h1>Editing knowhow post</h1>
+<h1><%= action_name == "new" ? "新規投稿" : "投稿の編集" %></h1>
 
-<%= render "form", knowhow_post: @knowhow_post %>
+<%= render 'form', knowhow_post: @knowhow_post %>
 
-<br>
-
-<div>
-  <%= link_to "Show this knowhow post", @knowhow_post %> |
-  <%= link_to "Back to knowhow posts", knowhow_posts_path %>
-</div>
+<%= link_to "戻る", knowhow_posts_path %>
