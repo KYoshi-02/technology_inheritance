@@ -15,7 +15,10 @@
     <% @knowhow_posts.each do |post| %>
       <tr>
         <td><%= link_to post.title, knowhow_post_path(post) %></td>
-        <td><%= post.user.nick_name %></td>
+        <td>
+          <%= post.user.nick_name %><br>
+          <small>(<%= post.user.company.name %>)</small>
+        </td>
         <td><%= post.created_at.strftime("%Y年%m月%d日") %></td>
         <td>
           <% if post.user == current_user || current_user.admin? %>
