@@ -1,5 +1,4 @@
-<%= form_with(model: knowhow_post, local: true) do |form| %>
-  <% if knowhow_post.errors.any? %>
+<%= form_with(model: @knowhow_post, local: true, html: { multipart: true }) do |form| %>  <% if knowhow_post.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(knowhow_post.errors.count, "エラー") %>があります</h2>
       <ul>

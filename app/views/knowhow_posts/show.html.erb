@@ -1,9 +1,5 @@
 <h1><%= @knowhow_post.title %></h1>
 
-<p><strong>本文：</strong><br>
-  <%= simple_format(@knowhow_post.content) %>
-</p>
-
 <p>
   <strong>投稿者：</strong>
   <%= @knowhow_post.user.nick_name %>
@@ -15,23 +11,30 @@
   <%= @knowhow_post.created_at.strftime("%Y年%m月%d日 %H:%M") %>
 </p>
 
+<hr>
+
+<p><strong>本文：</strong></p>
+<p><%= simple_format(@knowhow_post.content) %></p>
+
 <% if @knowhow_post.image.attached? %>
-  <p><strong>画像：</strong><br>
-    <%= image_tag @knowhow_post.image, style: "max-width: 300px;" %>
-  </p>
+  <hr>
+  <p><strong>画像：</strong></p>
+  <%= image_tag @knowhow_post.image, style: "max-width: 400px;" %>
 <% end %>
 
 <% if @knowhow_post.video.attached? %>
-  <p><strong>動画：</strong><br>
-    <%= video_tag @knowhow_post.video, controls: true, width: 300 %>
-  </p>
+  <hr>
+  <p><strong>動画：</strong></p>
+  <%= video_tag @knowhow_post.video, controls: true, width: 400 %>
 <% end %>
 
 <hr>
 
-<%= link_to "一覧に戻る", knowhow_posts_path, class: "btn btn-secondary" %>
+<div style="margin-top: 20px;">
+  <%= link_to "一覧に戻る", knowhow_posts_path, class: "btn btn-secondary" %>
 
-<% if @knowhow_post.user == current_user || current_user.admin? %>
-  <%= link_to "編集", edit_knowhow_post_path(@knowhow_post), class: "btn btn-primary" %>
-  <%= link_to "削除", knowhow_post_path(@knowhow_post), method: :delete, data: { confirm: "本当に削除しますか？" }, class: "btn btn-danger" %>
-<% end %>
+  <% if @knowhow_post.user == current_user || current_user.admin? %>
+    <%= link_to "編集", edit_knowhow_post_path(@knowhow_post), class: "btn btn-primary", style: "margin-left: 10px;" %>
+    <%= link_to "削除", knowhow_post_path(@knowhow_post), method: :delete, data: { confirm: "本当に削除しますか？" }, class: "btn btn-danger", style: "margin-left: 10px;" %>
+  <% end %>
+</div>
