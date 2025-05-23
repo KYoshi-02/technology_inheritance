@@ -1,8 +1,9 @@
-<%= form_with(model: @knowhow_post, local: true, html: { multipart: true }) do |form| %>  <% if knowhow_post.errors.any? %>
+<%= form_with(model: @knowhow_post, local: true, html: { multipart: true }) do |form| %>
+  <% if @knowhow_post.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(knowhow_post.errors.count, "エラー") %>があります</h2>
+      <h2><%= pluralize(@knowhow_post.errors.count, "エラー") %>があります</h2>
       <ul>
-        <% knowhow_post.errors.full_messages.each do |message| %>
+        <% @knowhow_post.errors.full_messages.each do |message| %>
           <li><%= message %></li>
         <% end %>
       </ul>
@@ -20,16 +21,24 @@
   </div>
 
   <div>
-    <%= form.label :image, "画像（任意）" %><br>
+    <%= form.label :image, "画像" %><br>
+    <% if @knowhow_post.image.attached? %>
+      <%= image_tag @knowhow_post.image.variant(resize_to_limit: [200, 200]) %><br>
+      <%= check_box_tag :remove_image, '1' %> 画像を削除
+    <% end %>
     <%= form.file_field :image %>
   </div>
 
   <div>
-    <%= form.label :video, "動画（任意）" %><br>
+    <%= form.label :video, "動画" %><br>
+    <% if @knowhow_post.video.attached? %>
+      <%= video_tag @knowhow_post.video, controls: true, width: 300 %><br>
+      <%= check_box_tag :remove_video, '1' %> 動画を削除
+    <% end %>
     <%= form.file_field :video %>
   </div>
 
   <div>
-    <%= form.submit action_name == "new" ? "投稿する" : "更新する" %>
+    <%= form.submit %>
   </div>
 <% end %>

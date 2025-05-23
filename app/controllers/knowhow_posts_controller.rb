@@ -24,13 +24,21 @@ class KnowhowPostsController < ApplicationController
   def edit; end
 
   def update
+    if params[:remove_image] == '1'
+      @knowhow_post.image.purge
+    end
+
+    if params[:remove_video] == '1'
+      @knowhow_post.video.purge
+    end
+
     if @knowhow_post.update(knowhow_post_params)
-      redirect_to @knowhow_post, notice: "更新が完了しました"
+      redirect_to @knowhow_post, notice: "投稿を更新しました"
     else
       render :edit, status: :unprocessable_entity
     end
   end
-
+  
   def destroy
     @knowhow_post.destroy
     redirect_to knowhow_posts_path, notice: "削除しました"
