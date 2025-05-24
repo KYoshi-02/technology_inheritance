@@ -35,6 +35,6 @@
 
   <% if @knowhow_post.user == current_user || current_user.admin? %>
     <%= link_to "編集", edit_knowhow_post_path(@knowhow_post), class: "btn btn-primary", style: "margin-left: 10px;" %>
-    <%= link_to "削除", knowhow_post_path(@knowhow_post), method: :delete, data: { confirm: "本当に削除しますか？" }, class: "btn btn-danger", style: "margin-left: 10px;" %>
+    <%= button_to "削除", knowhow_post_path(@knowhow_post), method: :delete, data: { confirm: "本当に削除しますか？" } %>
   <% end %>
 </div>
