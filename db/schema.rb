@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_05_21_100031) do
+ActiveRecord::Schema[7.1].define(version: 2025_05_25_084759) do
   create_table "active_storage_attachments", charset: "utf8mb3", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -66,6 +66,16 @@ ActiveRecord::Schema[7.1].define(version: 2025_05_21_100031) do
     t.index ["user_id"], name: "index_knowhows_on_user_id"
   end
 
+  create_table "memos", charset: "utf8mb3", force: :cascade do |t|
+    t.text "content"
+    t.bigint "user_id", null: false
+    t.bigint "knowhow_post_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["knowhow_post_id"], name: "index_memos_on_knowhow_post_id"
+    t.index ["user_id"], name: "index_memos_on_user_id"
+  end
+
   create_table "users", charset: "utf8mb3", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -88,4 +98,6 @@ ActiveRecord::Schema[7.1].define(version: 2025_05_21_100031) do
   add_foreign_key "knowhow_posts", "users"
   add_foreign_key "knowhows", "companies"
   add_foreign_key "knowhows", "users"
+  add_foreign_key "memos", "knowhow_posts"
+  add_foreign_key "memos", "users"
 end

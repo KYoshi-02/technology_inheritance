@@ -38,3 +38,22 @@
     <%= button_to "削除", knowhow_post_path(@knowhow_post), method: :delete, data: { confirm: "本当に削除しますか？" } %>
   <% end %>
 </div>
+
+<h2>メモ一覧</h2>
+<% @knowhow_post.memos.each do |memo| %>
+  <% if memo.user == current_user %>
+    <div class="memo">
+      <p><%= memo.content %></p>
+      <%= button_to "削除", memo_path(memo), method: :delete, data: { confirm: "削除しますか？" } %>
+    </div>
+  <% end %>
+<% end %>
+
+<h3>メモを追加</h3>
+<%= form_with model: Memo.new, url: memos_path, local: true do |f| %>
+  <%= f.hidden_field :knowhow_post_id, value: @knowhow_post.id %>
+  <div>
+    <%= f.text_area :content, rows: 3 %>
+  </div>
+  <%= f.submit "追加する" %>
+<% end %>
