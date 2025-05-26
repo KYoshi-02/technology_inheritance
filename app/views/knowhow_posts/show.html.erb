@@ -40,20 +40,33 @@
 </div>
 
 <h2>メモ一覧</h2>
-<% @knowhow_post.memos.each do |memo| %>
-  <% if memo.user == current_user %>
-    <div class="memo">
-      <p><%= memo.content %></p>
-      <%= button_to "削除", memo_path(memo), method: :delete, data: { confirm: "削除しますか？" } %>
-    </div>
+<% if @knowhow_post.memos.any? %>
+  <% @knowhow_post.memos.order(created_at: :desc).each do |memo| %>
+    <% if memo.user == current_user %>
+      <div class="memo-box" style="border: 1px solid #ccc; padding: 10px; margin-bottom: 10px;">
+        <p><%= simple_format(memo.content) %></p>
+        <small>
+          投稿日時：<%= memo.created_at.strftime("%Y/%m/%d %H:%M") %>
+        </small><br>
+        <%= button_to "削除", memo_path(memo), method: :delete, data: { confirm: "削除しますか？" }, class: "btn btn-sm btn-danger" %>
+      </div>
+    <% end %>
   <% end %>
+<% else %>
+  <p>まだメモがありません。</p>
 <% end %>
 
 <h3>メモを追加</h3>
+
 <%= form_with model: Memo.new, url: memos_path, local: true do |f| %>
   <%= f.hidden_field :knowhow_post_id, value: @knowhow_post.id %>
+
   <div>
-    <%= f.text_area :content, rows: 3 %>
+    <%= f.label :content, "内容" %><br>
+    <%= f.text_area :content, rows: 4, style: "width: 100%;" %>
   </div>
-  <%= f.submit "追加する" %>
+
+  <div style="margin-top: 8px;">
+    <%= f.submit "追加する", class: "btn btn-primary" %>
+  </div>
 <% end %>
