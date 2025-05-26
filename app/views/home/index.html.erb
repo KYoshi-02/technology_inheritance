@@ -2,7 +2,13 @@
 
 <% if user_signed_in? %>
   <p><%= current_user.nick_name %> さん、こんにちは！</p>
-  <p><%= button_to "ログアウト", destroy_user_session_path, method: :delete  %></p>
+
+  <% if current_user.admin? %>
+    <p><%= link_to "ノウハウ一覧", knowhow_posts_path %></p>
+    <p><%= link_to "ユーザー管理", users_path %></p>
+  <% end %>
+
+  <p><%= button_to "ログアウト", destroy_user_session_path, method: :delete %></p>
 <% else %>
   <p><%= link_to "ログイン", new_user_session_path %> | <%= link_to "新規登録", new_user_registration_path %></p>
 <% end %>

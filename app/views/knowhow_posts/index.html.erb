@@ -1,0 +1,40 @@
+<h1>ノウハウ一覧</h1>
+
+<%= link_to "トップページへ戻る", root_path, class: "btn btn-secondary" %><br><br>
+<%= link_to "新規投稿", new_knowhow_post_path, class: "btn btn-primary" %>
+
+<table>
+  <thead>
+    <tr>
+      <th>画像</th>
+      <th>タイトル</th>
+      <th>作成者</th>
+      <th>作成日</th>
+      <th>操作</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @knowhow_posts.each do |post| %>
+      <tr>
+        <td>
+          <% if post.image.attached? %>
+            <%= image_tag post.image.variant(resize_to_limit: [100, 100]) %>
+          <% else %>
+            -
+          <% end %>
+        </td>
+        <td><%= link_to post.title, knowhow_post_path(post) %></td>
+        <td><%= post.user.nick_name %></td>
+        <td><%= post.created_at.strftime("%Y年%m月%d日") %></td>
+        <td>
+          <% if post.user == current_user || current_user.admin? %>
+            <%= link_to '編集', edit_knowhow_post_path(post) %> |
+            <%= link_to '削除', knowhow_post_path(post), method: :delete, data: { confirm: '本当に削除しますか？' } %>
+          <% else %>
+            閲覧のみ
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
