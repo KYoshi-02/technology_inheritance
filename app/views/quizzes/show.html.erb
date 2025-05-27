@@ -1,0 +1,22 @@
+<h1><%= @quiz.question %></h1>
+
+<% if user_signed_in? %>
+  <%= form_with(model: [@quiz, Answer.new], local: true) do |form| %>
+    <div>
+      <%= form.label :content, "あなたの回答：" %>
+      <%= form.text_field :content %>
+    </div>
+    <%= form.submit "送信" %>
+  <% end %>
+<% else %>
+  <p>クイズに回答するにはログインしてください。</p>
+<% end %>
+
+<h2>みんなの回答</h2>
+<ul>
+  <% @quiz.answers.each do |answer| %>
+    <li>
+      <%= answer.user.nick_name %>：<%= answer.content %>
+    </li>
+  <% end %>
+</ul>
