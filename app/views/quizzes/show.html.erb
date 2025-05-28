@@ -1,22 +1,33 @@
-<h1><%= @quiz.question %></h1>
+<h1>クイズ詳細</h1>
 
-<% if user_signed_in? %>
-  <%= form_with(model: [@quiz, Answer.new], local: true) do |form| %>
-    <div>
-      <%= form.label :content, "あなたの回答：" %>
-      <%= form.text_field :content %>
-    </div>
-    <%= form.submit "送信" %>
-  <% end %>
-<% else %>
-  <p>クイズに回答するにはログインしてください。</p>
+<p>
+  <strong>問題：</strong><br>
+  <%= simple_format(@quiz.question) %>
+</p>
+
+<% if @quiz.image.attached? %>
+  <p>
+    <strong>画像：</strong><br>
+    <%= image_tag @quiz.image, style: "max-width: 300px;" %>
+  </p>
 <% end %>
 
-<h2>みんなの回答</h2>
-<ul>
-  <% @quiz.answers.each do |answer| %>
-    <li>
-      <%= answer.user.nick_name %>：<%= answer.content %>
-    </li>
-  <% end %>
-</ul>
+<p>
+  <strong>投稿者：</strong>
+  <%= @quiz.user.nick_name %>
+  <small>(<%= @quiz.user.company.name %>)</small>
+</p>
+
+<p>
+  <strong>投稿日時：</strong>
+  <%= @quiz.created_at.strftime("%Y年%m月%d日 %H:%M") %>
+</p>
+
+<hr>
+
+<%= link_to "一覧に戻る", quizzes_path, class: "btn btn-secondary" %>
+
+<% if @quiz.user == current_user || current_user.admin? %>
+  <%= link_to "編集", edit_quiz_path(@quiz), class: "btn btn-primary" %>
+  <%= link_to "削除", quiz_path(@quiz), method: :delete, data: { confirm: "本当に削除しますか？" }, class: "btn btn-danger" %>
+<% end %>
