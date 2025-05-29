@@ -24,6 +24,19 @@ class QuizzesController < ApplicationController
     @answers = @quiz.answers.includes(:user)
   end
 
+  def edit
+    @quiz = Quiz.find(params[:id])
+  end
+
+  def update
+    @quiz = Quiz.find(params[:id])
+    if @quiz.update(quiz_params)
+      redirect_to @quiz, notice: "クイズを更新しました"
+    else
+      render :edit, status: :unprocessable_entity
+    end
+  end
+
   private
 
   def set_quiz
