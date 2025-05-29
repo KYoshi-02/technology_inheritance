@@ -21,6 +21,7 @@ class QuizzesController < ApplicationController
 
   def show
     @quiz = Quiz.find(params[:id])
+    @answers = @quiz.answers.includes(:user)
   end
 
   private
