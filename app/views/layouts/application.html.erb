@@ -10,25 +10,28 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body>
-    <header class="bg-gray-800 text-white p-4 flex justify-between items-center">
-      <h1 class="text-xl font-semibold">
-        <%= link_to "SkillLink", root_path, class: "hover:underline" %>
+ <body class="bg-gray-100 text-gray-900 font-sans">
+    <header class="bg-white shadow-md py-4 px-6 flex justify-between items-center">
+      <h1 class="text-xl font-bold">
+        <%= link_to "Skill Link", root_path, class: "text-blue-600 hover:text-blue-800" %>
       </h1>
 
-      <div class="flex items-center space-x-4">
-        <% if user_signed_in? %>
-          <span><%= current_user.nick_name %> さん、こんにちは</span>
-          <%= button_to "ログアウト", destroy_user_session_path, method: :delete,
-                class: "bg-red-500 hover:bg-red-600 text-white font-bold py-1 px-3 rounded" %>
-        <% else %>
-          <%= link_to "ログイン", new_user_session_path,
-                class: "bg-blue-500 hover:bg-blue-600 text-white font-bold py-1 px-3 rounded" %>
-          <%= link_to "新規登録", new_user_registration_path,
-                class: "bg-green-500 hover:bg-green-600 text-white font-bold py-1 px-3 rounded" %>
-        <% end %>
-      </div>
+      <% if user_signed_in? %>
+        <div class="text-sm">
+          <span class="mr-4">こんにちは、<strong><%= current_user.nick_name %></strong> さん</span>
+          <%= button_to "ログアウト", destroy_user_session_path, method: :delete, class: "bg-red-500 hover:bg-red-600 text-white py-1 px-3 rounded" %>
+        </div>
+      <% else %>
+        <div class="text-sm space-x-2">
+          <%= link_to "ログイン", new_user_session_path, class: "text-blue-600 hover:underline" %>
+          <%= link_to "新規登録", new_user_registration_path, class: "text-blue-600 hover:underline" %>
+        </div>
+      <% end %>
     </header>
-    <%= yield %>
+
+    <main class="container mx-auto p-6">
+      <%= yield %>
+    </main>
   </body>
 </html>
+
