@@ -11,6 +11,24 @@
   </head>
 
   <body>
+    <header class="bg-gray-800 text-white p-4 flex justify-between items-center">
+      <h1 class="text-xl font-semibold">
+        <%= link_to "SkillLink", root_path, class: "hover:underline" %>
+      </h1>
+
+      <div class="flex items-center space-x-4">
+        <% if user_signed_in? %>
+          <span><%= current_user.nick_name %> さん、こんにちは</span>
+          <%= button_to "ログアウト", destroy_user_session_path, method: :delete,
+                class: "bg-red-500 hover:bg-red-600 text-white font-bold py-1 px-3 rounded" %>
+        <% else %>
+          <%= link_to "ログイン", new_user_session_path,
+                class: "bg-blue-500 hover:bg-blue-600 text-white font-bold py-1 px-3 rounded" %>
+          <%= link_to "新規登録", new_user_registration_path,
+                class: "bg-green-500 hover:bg-green-600 text-white font-bold py-1 px-3 rounded" %>
+        <% end %>
+      </div>
+    </header>
     <%= yield %>
   </body>
 </html>

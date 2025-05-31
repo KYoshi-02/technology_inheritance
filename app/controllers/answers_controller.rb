@@ -3,13 +3,27 @@ class AnswersController < ApplicationController
 
   def create
     @quiz = Quiz.find(params[:quiz_id])
-    @answer = @quiz.answers.build(answer_params.merge(user: current_user))
+    @answer = @quiz.answers.build(answer_params)
+    @answer.user = current_user
+
+    if @answer.content.strip == @quiz.correct_answer.strip
+      @answer.correct = true
+    else
+      @answer.correct = false
+    end
 
     if @answer.save
-      redirect_to @quiz, notice: "回答を送信しました"
+      if @answer.content.strip == @quiz.correct_answer.strip
+        flash[:notice] = "正解です！"
+      else
+        flash[:notice] = "不正解です。正解は「#{@quiz.correct_answer}」です。"
+      end
+      redirect_to @quiz
     else
-      redirect_to @quiz, alert: "回答の送信に失敗しました"
+      flash[:alert] = "回答の送信に失敗しました。"
+      render "quizzes/show", status: :unprocessable_entity
     end
+
   end
 
   private

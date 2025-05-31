@@ -1,3 +1,9 @@
+<% if flash[:notice] %>
+  <p style="color: green;"><%= flash[:notice] %></p>
+<% elsif flash[:alert] %>
+  <p style="color: red;"><%= flash[:alert] %></p>
+<% end %>
+
 <h1>クイズ詳細</h1>
 
 <p>
@@ -49,4 +55,18 @@
     <strong><%= answer.user.nick_name %></strong>：
     <%= simple_format(answer.content) %>
   </div>
+<% end %>
+
+<h2>回答一覧</h2>
+<% @quiz.answers.each do |answer| %>
+  <p>
+    <%= answer.user.nick_name %> さんの回答：
+    「<%= answer.content %>」
+    →
+    <% if answer.correct? %>
+      ✅ 正解
+    <% else %>
+      ❌ 不正解
+    <% end %>
+  </p>
 <% end %>
