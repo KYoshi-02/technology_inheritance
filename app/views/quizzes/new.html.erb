@@ -1,0 +1,41 @@
+<h1>クイズを投稿する</h1>
+
+<%= form_with(model: @quiz, local: true) do |form| %>
+  <% if @quiz.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@quiz.errors.count, "件のエラー") %>があります:</h2>
+      <ul>
+        <% @quiz.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :question, "問題文" %><br>
+    <%= form.text_area :question, rows: 5 %>
+  </div>
+
+  <div>
+    <%= form.label :correct_answer, "正解" %><br>
+    <%= form.text_field :correct_answer %>
+  </div>
+
+  <div>
+    <%= form.label :explanation, "解説（任意）" %><br>
+    <%= form.text_area :explanation, rows: 3 %>
+  </div>
+
+  <div>
+    <%= form.label :image, "画像（任意）" %>
+    <%= form.file_field :image %>
+  </div>
+
+  <div>
+    <%= form.submit "投稿する", class: "btn btn-primary" %>
+  </div>
+<% end %>
+
+<br>
+<%= link_to "一覧に戻る", quizzes_path, class: "btn btn-secondary" %>

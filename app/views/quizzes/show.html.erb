@@ -1,0 +1,72 @@
+<% if flash[:notice] %>
+  <p style="color: green;"><%= flash[:notice] %></p>
+<% elsif flash[:alert] %>
+  <p style="color: red;"><%= flash[:alert] %></p>
+<% end %>
+
+<h1>クイズ詳細</h1>
+
+<p>
+  <strong>問題：</strong><br>
+  <%= simple_format(@quiz.question) %>
+</p>
+
+<% if @quiz.image.attached? %>
+  <p>
+    <strong>画像：</strong><br>
+    <%= image_tag @quiz.image, style: "max-width: 300px;" %>
+  </p>
+<% end %>
+
+<p>
+  <strong>投稿者：</strong>
+  <%= @quiz.user.nick_name %>
+  <small>(<%= @quiz.user.company.name %>)</small>
+</p>
+
+<p>
+  <strong>投稿日時：</strong>
+  <%= @quiz.created_at.strftime("%Y年%m月%d日 %H:%M") %>
+</p>
+
+<hr>
+
+<%= link_to "一覧に戻る", quizzes_path, class: "btn btn-secondary" %>
+
+<% if @quiz.user == current_user || current_user.admin? %>
+  <%= link_to "編集", edit_quiz_path(@quiz), class: "btn btn-primary" %>
+  <%= link_to "削除", quiz_path(@quiz), method: :delete, data: { confirm: "本当に削除しますか？" }, class: "btn btn-danger" %>
+<% end %>
+
+<h2>回答する</h2>
+<%= form_with(model: [@quiz, Answer.new], local: true) do |form| %>
+  <div>
+    <%= form.label :content, "あなたの回答" %><br>
+    <%= form.text_area :content %>
+  </div>
+  <div>
+    <%= form.submit "回答を送信" %>
+  </div>
+<% end %>
+
+<h2>みんなの回答</h2>
+<% @quiz.answers.each do |answer| %>
+  <div>
+    <strong><%= answer.user.nick_name %></strong>：
+    <%= simple_format(answer.content) %>
+  </div>
+<% end %>
+
+<h2>回答一覧</h2>
+<% @quiz.answers.each do |answer| %>
+  <p>
+    <%= answer.user.nick_name %> さんの回答：
+    「<%= answer.content %>」
+    →
+    <% if answer.correct? %>
+      ✅ 正解
+    <% else %>
+      ❌ 不正解
+    <% end %>
+  </p>
+<% end %>

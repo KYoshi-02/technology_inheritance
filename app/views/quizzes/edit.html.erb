@@ -1,0 +1,35 @@
+<h1>クイズを編集する</h1>
+
+<%= form_with(model: @quiz, local: true) do |form| %>
+  <% if @quiz.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@quiz.errors.count, "件のエラー") %>があります</h2>
+      <ul>
+        <% @quiz.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :question, "問題文" %><br>
+    <%= form.text_field :question %>
+  </div>
+
+  <div>
+    <%= form.label :correct_answer, "正解" %><br>
+    <%= form.text_field :correct_answer %>
+  </div>
+
+  <div>
+    <%= form.label :explanation, "解説" %><br>
+    <%= form.text_area :explanation %>
+  </div>
+
+  <div>
+    <%= form.submit "更新する" %>
+  </div>
+<% end %>
+
+<%= link_to "戻る", quiz_path(@quiz), class: "btn btn-secondary" %>

@@ -10,6 +10,8 @@ class User < ApplicationRecord
 
   has_many :memos, dependent: :destroy
 
+  has_many :quizzes, dependent: :destroy
+
   before_validation :assign_company
 
 

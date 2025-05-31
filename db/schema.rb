@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_05_25_084759) do
+ActiveRecord::Schema[7.1].define(version: 2025_05_31_074833) do
   create_table "active_storage_attachments", charset: "utf8mb3", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -37,6 +37,18 @@ ActiveRecord::Schema[7.1].define(version: 2025_05_25_084759) do
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
+
+  create_table "answers", charset: "utf8mb3", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "quiz_id", null: false
+    t.string "selected_answer"
+    t.boolean "correct"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "content"
+    t.index ["quiz_id"], name: "index_answers_on_quiz_id"
+    t.index ["user_id"], name: "index_answers_on_user_id"
   end
 
   create_table "companies", charset: "utf8mb3", force: :cascade do |t|
@@ -76,6 +88,16 @@ ActiveRecord::Schema[7.1].define(version: 2025_05_25_084759) do
     t.index ["user_id"], name: "index_memos_on_user_id"
   end
 
+  create_table "quizzes", charset: "utf8mb3", force: :cascade do |t|
+    t.string "question"
+    t.string "correct_answer"
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.text "explanation"
+    t.index ["user_id"], name: "index_quizzes_on_user_id"
+  end
+
   create_table "users", charset: "utf8mb3", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -95,9 +117,12 @@ ActiveRecord::Schema[7.1].define(version: 2025_05_25_084759) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "answers", "quizzes"
+  add_foreign_key "answers", "users"
   add_foreign_key "knowhow_posts", "users"
   add_foreign_key "knowhows", "companies"
   add_foreign_key "knowhows", "users"
   add_foreign_key "memos", "knowhow_posts"
   add_foreign_key "memos", "users"
+  add_foreign_key "quizzes", "users"
 end

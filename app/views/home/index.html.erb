@@ -6,6 +6,10 @@
   <% if current_user.admin? %>
     <p><%= link_to "ノウハウ一覧", knowhow_posts_path %></p>
     <p><%= link_to "ユーザー管理", users_path %></p>
+    <p><%= link_to "クイズ一覧", quizzes_path %></p>
+    <p><%= link_to "クイズを作成する", new_quiz_path %></p>
+  <% else %>
+    <p><%= link_to "クイズ一覧", quizzes_path %></p>
   <% end %>
 
   <p><%= button_to "ログアウト", destroy_user_session_path, method: :delete %></p>
