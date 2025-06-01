@@ -1,18 +1,23 @@
-<h1>SkillLinkへようこそ！</h1>
+<div class="min-h-screen bg-gray-100 py-12 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-3xl mx-auto text-center">
+    <h1 class="text-4xl font-bold text-gray-800 mb-6">SkillLinkへようこそ！</h1>
 
-<% if user_signed_in? %>
-  <p><%= current_user.nick_name %> さん、こんにちは！</p>
+    <% if user_signed_in? %>
+      <p class="text-lg text-gray-600 mb-4"><%= current_user.nick_name %> さん、こんにちは！</p>
 
-  <% if current_user.admin? %>
-    <p><%= link_to "ノウハウ一覧", knowhow_posts_path %></p>
-    <p><%= link_to "ユーザー管理", users_path %></p>
-    <p><%= link_to "クイズ一覧", quizzes_path %></p>
-    <p><%= link_to "クイズを作成する", new_quiz_path %></p>
-  <% else %>
-    <p><%= link_to "クイズ一覧", quizzes_path %></p>
-  <% end %>
-
-  <p><%= button_to "ログアウト", destroy_user_session_path, method: :delete %></p>
-<% else %>
-  <p><%= link_to "ログイン", new_user_session_path %> | <%= link_to "新規登録", new_user_registration_path %></p>
-<% end %>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+        <% if current_user.admin? %>
+          <%= link_to "ノウハウ一覧", knowhow_posts_path, class: "block w-full text-white bg-blue-600 hover:bg-blue-700 px-4 py-3 rounded-md text-center shadow" %>
+          <%= link_to "ユーザー管理", users_path, class: "block w-full text-white bg-indigo-600 hover:bg-indigo-700 px-4 py-3 rounded-md text-center shadow" %>
+        <% end %>
+        <%= link_to "クイズ一覧", quizzes_path, class: "block w-full text-white bg-green-600 hover:bg-green-700 px-4 py-3 rounded-md text-center shadow" %>
+        <%= button_to "ログアウト", destroy_user_session_path, method: :delete, class: "block w-full text-white bg-red-600 hover:bg-red-700 px-4 py-3 rounded-md text-center shadow" %>
+      </div>
+    <% else %>
+      <div class="flex justify-center gap-4 mb-6">
+        <%= link_to "ログイン", new_user_session_path, class: "text-blue-600 hover:underline" %>
+        <%= link_to "新規登録", new_user_registration_path, class: "text-blue-600 hover:underline" %>
+      </div>
+    <% end %>
+  </div>
+</div>
