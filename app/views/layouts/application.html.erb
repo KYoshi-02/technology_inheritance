@@ -18,15 +18,25 @@
           <%= link_to "SkillLink", root_path %>
         </h1>
 
-        <div class="space-x-4 text-sm">
-          <% if user_signed_in? %>
+        <% if user_signed_in? %>
+          <nav class="space-x-4 text-sm text-gray-700">
+            <%= link_to "ノウハウ一覧", knowhow_posts_path, class: "hover:text-blue-500" %>
+            <%= link_to "クイズ一覧", quizzes_path, class: "hover:text-blue-500" %>
+            <% if current_user.admin? %>
+              <%= link_to "ユーザー管理", users_path, class: "hover:text-blue-500" %>
+            <% end %>
+          </nav>
+
+          <div class="space-x-4 text-sm">
             <span><%= current_user.nick_name %> さん</span>
-            <%= link_to "ログアウト", destroy_user_session_path, method: :delete, class: "text-red-500 hover:underline" %>
-          <% else %>
+            <%= button_to "ログアウト", destroy_user_session_path, method: :delete, class: "text-red-500 hover:underline bg-transparent border-none p-0", form: { "data-turbo": false } %>
+          </div>
+        <% else %>
+          <div class="space-x-4 text-sm">
             <%= link_to "ログイン", new_user_session_path, class: "text-blue-500 hover:underline" %>
             <%= link_to "新規登録", new_user_registration_path, class: "text-blue-500 hover:underline" %>
-          <% end %>
-        </div>
+          </div>
+        <% end %>
       </div>
     </header>
 
