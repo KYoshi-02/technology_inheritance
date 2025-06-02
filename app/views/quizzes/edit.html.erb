@@ -1,35 +1,37 @@
-<h1>クイズを編集する</h1>
+<h1 class="text-2xl font-bold text-center my-6">クイズを編集する</h1>
 
-<%= form_with(model: @quiz, local: true) do |form| %>
-  <% if @quiz.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@quiz.errors.count, "件のエラー") %>があります</h2>
-      <ul>
-        <% @quiz.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
+<div class="max-w-2xl mx-auto bg-white p-6 rounded-xl shadow-md">
+  <%= form_with(model: @quiz, local: true) do |form| %>
+    <% if @quiz.errors.any? %>
+      <div id="error_explanation" class="mb-4">
+        <h2 class="text-red-600 font-bold mb-2"><%= pluralize(@quiz.errors.count, "件のエラー") %>があります</h2>
+        <ul class="list-disc list-inside text-red-500">
+          <% @quiz.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="mb-4">
+      <%= form.label :question, "問題文", class: "block font-medium text-gray-700 mb-1" %>
+      <%= form.text_field :question, class: "w-full border border-gray-300 rounded px-3 py-2 mb-4" %>
+    </div>
+
+    <div class="mb-4">
+      <%= form.label :correct_answer, "正解", class: "block font-medium text-gray-700 mb-1" %>
+      <%= form.text_field :correct_answer, class: "w-full border border-gray-300 rounded px-3 py-2 mb-4" %>
+    </div>
+
+    <div class="mb-4">
+      <%= form.label :explanation, "解説", class: "block font-medium text-gray-700 mb-1" %>
+      <%= form.text_area :explanation, class: "w-full border border-gray-300 rounded px-3 py-2 mb-4" %>
+    </div>
+
+    <div>
+      <%= form.submit "更新する", class: "bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded" %>
     </div>
   <% end %>
 
-  <div>
-    <%= form.label :question, "問題文" %><br>
-    <%= form.text_field :question %>
-  </div>
-
-  <div>
-    <%= form.label :correct_answer, "正解" %><br>
-    <%= form.text_field :correct_answer %>
-  </div>
-
-  <div>
-    <%= form.label :explanation, "解説" %><br>
-    <%= form.text_area :explanation %>
-  </div>
-
-  <div>
-    <%= form.submit "更新する" %>
-  </div>
-<% end %>
-
-<%= link_to "戻る", quiz_path(@quiz), class: "btn btn-secondary" %>
+  <%= link_to "戻る", quiz_path(@quiz), class: "inline-block mt-4 text-blue-500 hover:underline" %>
+</div>
