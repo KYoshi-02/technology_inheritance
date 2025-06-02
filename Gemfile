@@ -69,3 +69,7 @@ end
 
 gem "devise"
 gem "tailwindcss-rails"
+
+group :production do
+  gem 'pg'
+end
