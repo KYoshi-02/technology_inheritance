@@ -1,31 +1,17 @@
-<h1>クイズ一覧</h1>
+<div class="max-w-7xl mx-auto px-4 py-8">
+  <div class="flex justify-between items-center mb-6">
+    <h1 class="text-2xl font-bold">クイズ一覧</h1>    
+  </div>
 
-<%= link_to "新規クイズ投稿", new_quiz_path, class: "btn btn-primary" %>
-
-<table>
-  <thead>
-    <tr>
-      <th>問題文</th>
-      <th>投稿者</th>
-      <th>投稿日</th>
-      <th>操作</th>
-    </tr>
-  </thead>
-
-  <tbody>
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
     <% @quizzes.each do |quiz| %>
-      <tr>
-        <td><%= truncate(quiz.question, length: 50) %></td>
-        <td><%= quiz.user.nick_name %></td>
-        <td><%= quiz.created_at.strftime("%Y年%m月%d日") %></td>
-        <td>
-          <%= link_to "詳細", quiz_path(quiz), class: "btn btn-sm btn-outline-info" %>
-          <% if quiz.user == current_user || current_user.admin? %>
-            <%= link_to "編集", edit_quiz_path(quiz), class: "btn btn-sm btn-outline-warning" %>
-            <%= link_to "削除", quiz_path(quiz), method: :delete, data: { confirm: "本当に削除しますか？" }, class: "btn btn-sm btn-outline-danger" %>
-          <% end %>
-        </td>
-      </tr>
+      <div class="bg-white rounded-xl shadow-md p-4 hover:shadow-lg transition">
+        <h2 class="text-lg font-semibold mb-2">
+          <%= link_to quiz.question, quiz_path(quiz), class: "hover:underline text-blue-600" %>
+        </h2>
+        <p class="text-sm text-gray-600 mb-1">作成者: <%= quiz.user.nick_name %></p>
+        <p class="text-sm text-gray-600">作成日: <%= quiz.created_at.strftime("%Y年%m月%d日") %></p>
+      </div>
     <% end %>
-  </tbody>
-</table>
+  </div>
+</div>
