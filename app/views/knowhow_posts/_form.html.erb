@@ -1,8 +1,8 @@
-<%= form_with(model: @knowhow_post, local: true, html: { multipart: true }) do |form| %>
+<%= form_with(model: @knowhow_post, local: true, html: { multipart: true, class: "max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-md" }) do |form| %>
   <% if @knowhow_post.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@knowhow_post.errors.count, "エラー") %>があります</h2>
-      <ul>
+    <div id="error_explanation" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-md mb-6">
+      <h2 class="font-bold text-lg mb-2"><%= pluralize(@knowhow_post.errors.count, "件のエラー") %>があります:</h2>
+      <ul class="list-disc list-inside space-y-1">
         <% @knowhow_post.errors.full_messages.each do |message| %>
           <li><%= message %></li>
         <% end %>
@@ -10,35 +10,48 @@
     </div>
   <% end %>
 
-  <div>
-    <%= form.label :title, "タイトル" %><br>
-    <%= form.text_field :title %>
-  </div>
+  <div class="space-y-6">
+    <div>
+      <%= form.label :title, "タイトル", class: "block text-sm font-medium text-gray-700" %>
+      <%= form.text_field :title, class: "mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" %>
+    </div>
 
-  <div>
-    <%= form.label :content, "本文" %><br>
-    <%= form.text_area :content %>
-  </div>
+    <div>
+      <%= form.label :content, "本文", class: "block text-sm font-medium text-gray-700" %>
+      <%= form.text_area :content, rows: 6, class: "mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" %>
+    </div>
 
-  <div>
-    <%= form.label :image, "画像" %><br>
-    <% if @knowhow_post.image.attached? %>
-      <%= image_tag @knowhow_post.image.variant(resize_to_limit: [200, 200]) %><br>
-      <%= check_box_tag :remove_image, '1' %> 画像を削除
-    <% end %>
-    <%= form.file_field :image %>
-  </div>
+    <div>
+      <%= form.label :image, "画像", class: "block text-sm font-medium text-gray-700" %>
+      <% if @knowhow_post.image.attached? %>
+        <div class="mt-1 mb-2">
+          <%= image_tag @knowhow_post.image.variant(resize_to_limit: [200, 200]), class: "rounded-md shadow-sm" %>
+          <div class="mt-2">
+            <%= check_box_tag :remove_image, '1', false, class: "h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500" %>
+            <%= label_tag :remove_image, "画像を削除する", class: "ml-2 text-sm text-gray-900" %>
+          </div>
+        </div>
+      <% end %>
+      <%= form.file_field :image, class: "mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100" %>
+    </div>
 
-  <div>
-    <%= form.label :video, "動画" %><br>
-    <% if @knowhow_post.video.attached? %>
-      <%= video_tag @knowhow_post.video, controls: true, width: 300 %><br>
-      <%= check_box_tag :remove_video, '1' %> 動画を削除
-    <% end %>
-    <%= form.file_field :video %>
-  </div>
+    <div>
+      <%= form.label :video, "動画", class: "block text-sm font-medium text-gray-700" %>
+      <% if @knowhow_post.video.attached? %>
+        <div class="mt-1 mb-2">
+          <%= video_tag @knowhow_post.video, controls: true, width: 300, class: "rounded-md shadow-sm" %>
+          <div class="mt-2">
+            <%= check_box_tag :remove_video, '1', false, class: "h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500" %>
+            <%= label_tag :remove_video, "動画を削除する", class: "ml-2 text-sm text-gray-900" %>
+          </div>
+        </div>
+      <% end %>
+      <%= form.file_field :video, class: "mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100" %>
+    </div>
 
-  <div>
-    <%= form.submit %>
+    <div class="pt-2">
+      <%= form.submit "投稿する", class: "w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" %>
+    </div>
+    <%= link_to "戻る", knowhow_posts_path, class: "inline-block mt-4 text-sm text-blue-600 hover:text-blue-800 hover:underline" %>
   </div>
 <% end %>
