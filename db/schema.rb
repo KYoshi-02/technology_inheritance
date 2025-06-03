@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_05_31_074833) do
+ActiveRecord::Schema[7.1].define(version: 2025_06_03_104445) do
   create_table "active_storage_attachments", charset: "utf8mb3", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -108,8 +108,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_05_31_074833) do
     t.datetime "updated_at", null: false
     t.string "name"
     t.string "nick_name"
-    t.bigint "company_id", null: false
     t.integer "role", default: 0, null: false
+    t.bigint "company_id", null: false
     t.index ["company_id"], name: "index_users_on_company_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
@@ -125,4 +125,5 @@ ActiveRecord::Schema[7.1].define(version: 2025_05_31_074833) do
   add_foreign_key "memos", "knowhow_posts"
   add_foreign_key "memos", "users"
   add_foreign_key "quizzes", "users"
+  add_foreign_key "users", "companies"
 end
