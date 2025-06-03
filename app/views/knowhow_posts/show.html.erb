@@ -1,72 +1,70 @@
-<h1><%= @knowhow_post.title %></h1>
+<h1 class="text-2xl font-bold mb-4"><%= @knowhow_post.title %></h1>
 
-<p>
-  <strong>投稿者：</strong>
-  <%= @knowhow_post.user.nick_name %>
-  <small>(<%= @knowhow_post.user.company.name %>)</small>
-</p>
+<div class="text-sm text-gray-600 mb-4">
+  <p><strong>投稿者：</strong><%= @knowhow_post.user.nick_name %>（<%= @knowhow_post.user.company.name %>）</p>
+  <p><strong>投稿日時：</strong><%= @knowhow_post.created_at.strftime("%Y年%m月%d日 %H:%M") %></p>
+</div>
 
-<p>
-  <strong>投稿日時：</strong>
-  <%= @knowhow_post.created_at.strftime("%Y年%m月%d日 %H:%M") %>
-</p>
-
-<hr>
-
-<p><strong>本文：</strong></p>
-<p><%= simple_format(@knowhow_post.content) %></p>
+<div class="mb-6">
+  <p class="font-semibold mb-2">本文：</p>
+  <p><%= simple_format(@knowhow_post.content) %></p>
+</div>
 
 <% if @knowhow_post.image.attached? %>
-  <hr>
-  <p><strong>画像：</strong></p>
-  <%= image_tag @knowhow_post.image, style: "max-width: 400px;" %>
+  <div class="mb-6 text-center">
+    <p class="font-semibold mb-2">画像：</p>
+    <%= image_tag @knowhow_post.image, class: "inline-block max-w-md rounded shadow" %>
+  </div>
 <% end %>
 
 <% if @knowhow_post.video.attached? %>
-  <hr>
-  <p><strong>動画：</strong></p>
-  <%= video_tag @knowhow_post.video, controls: true, width: 400 %>
+  <div class="mb-6 text-center">
+    <p class="font-semibold mb-2">動画：</p>
+    <%= video_tag @knowhow_post.video, controls: true, width: 400, class: "inline-block rounded shadow" %>
+  </div>
 <% end %>
 
-<hr>
-
-<div style="margin-top: 20px;">
-  <%= link_to "一覧に戻る", knowhow_posts_path, class: "btn btn-secondary" %>
+<div class="flex gap-4 my-6">
+  <%= link_to "一覧に戻る", knowhow_posts_path, class: "text-blue-500 hover:underline" %>
 
   <% if @knowhow_post.user == current_user || current_user.admin? %>
-    <%= link_to "編集", edit_knowhow_post_path(@knowhow_post), class: "btn btn-primary", style: "margin-left: 10px;" %>
-    <%= button_to "削除", knowhow_post_path(@knowhow_post), method: :delete, data: { confirm: "本当に削除しますか？" } %>
+    <%= link_to "編集", edit_knowhow_post_path(@knowhow_post), class: "text-blue-500 hover:underline" %>
+    <%= button_to "削除", knowhow_post_path(@knowhow_post), method: :delete, data: { confirm: "本当に削除しますか？" }, class: "text-red-500 hover:underline" %>
   <% end %>
 </div>
 
-<h2>メモ一覧</h2>
-<% if @knowhow_post.memos.any? %>
-  <% @knowhow_post.memos.order(created_at: :desc).each do |memo| %>
-    <% if memo.user == current_user %>
-      <div class="memo-box" style="border: 1px solid #ccc; padding: 10px; margin-bottom: 10px;">
-        <p><%= simple_format(memo.content) %></p>
-        <small>
-          投稿日時：<%= memo.created_at.strftime("%Y/%m/%d %H:%M") %>
-        </small><br>
-        <%= button_to "削除", memo_path(memo), method: :delete, data: { confirm: "削除しますか？" }, class: "btn btn-sm btn-danger" %>
-      </div>
+<h2 class="text-lg font-bold mb-2">メモ一覧</h2>
+<div class="mb-6">
+  <% if @knowhow_post.memos.any? %>
+    <% @knowhow_post.memos.order(created_at: :desc).each do |memo| %>
+      <% if memo.user == current_user %>
+        <div class="memo-box border border-gray-300 rounded p-3 mb-3">
+          <p><%= simple_format(memo.content) %></p>
+          <small>
+            投稿日時：<%= memo.created_at.strftime("%Y/%m/%d %H:%M") %>
+          </small><br>
+          <%= button_to "削除", memo_path(memo), method: :delete, data: { confirm: "削除しますか？" }, class: "text-red-500 hover:underline text-sm mt-2" %>
+        </div>
+      <% end %>
     <% end %>
+  <% else %>
+    <p class="text-gray-500">まだメモがありません。</p>
   <% end %>
-<% else %>
-  <p>まだメモがありません。</p>
-<% end %>
+</div>
 
-<h3>メモを追加</h3>
+<h3 class="text-base font-semibold mb-2">メモを追加</h3>
 
-<%= form_with model: Memo.new, url: memos_path, local: true do |f| %>
-  <%= f.hidden_field :knowhow_post_id, value: @knowhow_post.id %>
+<div class="border border-gray-200 rounded p-4 mb-6">
+  <%= form_with model: Memo.new, url: memos_path, local: true do |f| %>
+    <%= f.hidden_field :knowhow_post_id, value: @knowhow_post.id %>
 
-  <div>
-    <%= f.label :content, "内容" %><br>
-    <%= f.text_area :content, rows: 4, style: "width: 100%;" %>
-  </div>
+    <div class="mb-2">
+      <%= f.label :content, "内容", class: "block mb-1 font-medium" %>
+      <%= f.text_area :content, rows: 4, class: "w-full border rounded px-2 py-1" %>
+    </div>
 
-  <div style="margin-top: 8px;">
-    <%= f.submit "追加する", class: "btn btn-primary" %>
-  </div>
-<% end %>
+    <div>
+      <%= f.submit "追加する", class: "bg-blue-500 text-white rounded px-4 py-2 hover:bg-blue-600" %>
+    </div>
+  <% end %>
+</div>
